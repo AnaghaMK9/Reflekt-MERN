@@ -98,7 +98,11 @@ function Sidebar() {
     }
 
     const onClick = () => {
-        if (localStorage.token) {
+        if (localStorage.token && localStorage.token_one) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('token_one');
+            window.location.href = '/';
+        } else if (localStorage.token) {
             localStorage.removeItem('token');
             window.location.href = '/';
         }
@@ -190,7 +194,7 @@ function Sidebar() {
                     data={data}
                     setData={setData} />
             </main>
-            <Instructions handleClose={handleClose} open={open}/>
+            <Instructions handleClose={handleClose} open={open} />
         </div>
     )
 }

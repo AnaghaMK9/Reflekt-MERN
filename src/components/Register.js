@@ -93,6 +93,7 @@ function Register(props) {
                                 autoComplete="fname"
                                 name="name"
                                 variant="outlined"
+                                type='text'
                                 required
                                 fullWidth
                                 id="firstName"

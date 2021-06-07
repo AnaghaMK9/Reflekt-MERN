@@ -1,11 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {Table, TableBody, TableCell, TableHead, TableRow, Paper} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,8 +29,7 @@ const rows = [
     createData('Unordered List', ['- First', '- Second', '- Third']),
     createData('Code', ['`write your code here`']),
     createData('Link', ['[title](https://example.com)']),
-    createData('Fenced Code Block', ["```{'name':'Name', \n'lname':'Last Name'}```"]),
-    createData('Strikethrough', ['~~This is strikethrough syntax~~'])
+    createData('Fenced Code Block', ["```{'name':'Name', \n'lname':'Last Name'}```"])
 ];
 
 export default function Markdown() {
@@ -59,7 +53,7 @@ export default function Markdown() {
                                 </TableCell>
                             </TableRow>
                             {row.cheats.map(cheat => (
-                                <TableRow>
+                                <TableRow key={row.index}>
                                     <TableCell>{cheat}</TableCell>
                                 </TableRow>
                             ))}

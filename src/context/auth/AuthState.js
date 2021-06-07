@@ -11,7 +11,8 @@ import {
     AUTH_ERROR, CLEAR_ERRORS,
     LOGIN_SUCCESS, LOGIN_FAIL,
     FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAIL,
-    RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAIL
+    RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAIL,
+    CLEAR_STATUS
 } from '../types.js';
 
 function AuthState(props) {
@@ -21,7 +22,7 @@ function AuthState(props) {
         error: null,
         isAuthenticated: false,
         user: null,
-        msg: ""
+        msg: null
     }
 
     const [state, dispatch] = useReducer(AuthReducer, initialState);
@@ -113,7 +114,6 @@ function AuthState(props) {
         try {
             setLoading();
             const res = await axios.post(`https://murmuring-hollows-36087.herokuapp.com/api/user/forgot_password`, { email }, config);
-            //console.log(res.data);
             dispatch({
                 type: FORGOT_PASSWORD_SUCCESS,
                 payload: res.data
@@ -133,8 +133,8 @@ function AuthState(props) {
                 "Content-Type": "application/json",
             },
         }
-        if (localStorage.token) {
-            setAuthToken(localStorage.token);
+        if (localStorage.token_one) {
+            setAuthToken(localStorage.token_one);
         }
         try {
             setLoading();
@@ -144,7 +144,6 @@ function AuthState(props) {
                 type: RESET_PASSWORD_SUCCESS,
                 payload: res.data,
             });
-            loadUser();
         } catch (err) {
             console.log(err);
             dispatch({
@@ -167,6 +166,11 @@ function AuthState(props) {
         });
     }
 
+    const clearStatus = () => {
+        dispatch({
+            type: CLEAR_STATUS
+        });
+    }
     return (
         <AuthContext.Provider
             value={{
@@ -175,13 +179,15 @@ function AuthState(props) {
                 isAuthenticated: state.isAuthenticated,
                 user: state.user,
                 token: state.token,
+                msg: state.msg,
                 userRegister,
                 loadUser,
                 setLoading,
                 login,
                 forgotPassword,
                 resetPassword,
-                clearErrors
+                clearErrors,
+                clearStatus
             }}>
             {props.children}
         </AuthContext.Provider>

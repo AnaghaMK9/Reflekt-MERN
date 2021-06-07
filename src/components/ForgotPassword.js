@@ -56,7 +56,7 @@ function ForgotPassword() {
     const onSubmit = (event) => {
         event.preventDefault();
         forgotPassword(email);
-        setAlert('Password link is being sent to your email', 'primary');
+        //setAlert('Password reset link sent to your email.', 'primary');
     }
     return (
         <Container component='main' maxWidth='xs'>
@@ -72,12 +72,12 @@ function ForgotPassword() {
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
-                                required
+                                // required
                                 fullWidth
                                 name="email"
                                 label="Enter Registered Email."
                                 type="email"
-                                id="password"
+
                                 autoComplete="current-password"
                                 onChange={(event) => setEmail(event.target.value)}
                             />

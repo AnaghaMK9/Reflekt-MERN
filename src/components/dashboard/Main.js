@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, Button } from '@material-ui/core';
+import { Box, TextField, Typography } from '@material-ui/core';
 import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import JournalContext from '../../context/dashboard/JournalContext.js';
@@ -12,16 +12,17 @@ const useStyles = makeStyles((theme) => ({
 
 function Main({ activeJournal, data, setData, journal }) {
     const journalContext = useContext(JournalContext);
-    const { journals, updateJournal } = journalContext;
+    const { journals, updateJournal, loading } = journalContext;
 
     const [current, setCurrent] = useState({});
-
+    let timer = null;
     const onEdit = (field, value) => {
 
         setCurrent({
             ...current,
             [field]: value
         });
+        localStorage.setItem('current', JSON.stringify(current));
     }
     useEffect(() => {
         if (activeJournal) {
@@ -37,8 +38,18 @@ function Main({ activeJournal, data, setData, journal }) {
     };
 
     const save = () => {
-        updateJournal(current._id, current.title, current.journalbody);
+        let currentLocal = JSON.parse(localStorage.getItem('current'));
+        updateJournal(currentLocal._id, currentLocal.title, currentLocal.journalbody);
     }
+
+    const autosave = () => {
+        if(timer){
+            clearTimeout(timer);
+        }
+        timer = setTimeout(save, 5000);
+    }
+    //setTimeout(save, 10000);
+
     const classes = useStyles();
     if (journals.length === 0) {
         return (
@@ -65,6 +76,7 @@ function Main({ activeJournal, data, setData, journal }) {
     return (
         <div>
             <div>
+                <div style={{ marginLeft: '3px' }}>{loading ? 'Saving...' : 'Saved'}</div>
                 <TextField
                     id='title'
                     name='title'
@@ -75,6 +87,7 @@ function Main({ activeJournal, data, setData, journal }) {
                     className={classes.title}
                     value={current.title}
                     onChange={(e) => onEdit('title', e.target.value)}
+                    onKeyUp={autosave}
                 />
                 <TextField
                     id='journalbody'
@@ -89,9 +102,10 @@ function Main({ activeJournal, data, setData, journal }) {
                     variant='filled'
                     className={classes.title}
                     value={current.journalbody}
-                    onChange={(e) => onEdit('journalbody', e.target.value)} />
+                    onChange={(e) => onEdit('journalbody', e.target.value)}
+                    onKeyUp={autosave} />
             </div>
-            <Button onClick={save} backgroundColor='primary'>Save</Button>
+            {/* <Button onClick={save} backgroundColor='primary'>Save</Button> */}
             <div>
                 <Typography variant='h5'>
                     {current.title}

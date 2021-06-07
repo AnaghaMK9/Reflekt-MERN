@@ -10,7 +10,8 @@ import {
     FORGOT_PASSWORD_SUCCESS,
     RESET_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_FAIL,
-    RESET_PASSWORD_FAIL
+    RESET_PASSWORD_FAIL,
+    CLEAR_STATUS
 } from "../types";
 
 const reducer = (state, action) => {
@@ -42,17 +43,17 @@ const reducer = (state, action) => {
                 error: action.payload.errors
             }
         case FORGOT_PASSWORD_SUCCESS:
-            localStorage.setItem('token', action.payload.status);
+            localStorage.setItem('token_one', action.payload.token);
             return {
                 ...state,
                 loading: false,
             }
         case RESET_PASSWORD_SUCCESS:
-            localStorage.setItem('token', action.payload.status);
-            console.log(action.payload);
+            //localStorage.setItem('token_one', action.payload.token);
             return {
                 ...state,
                 loading: false,
+                msg: action.payload.status,
                 isAuthenticated: true
             }
         case FORGOT_PASSWORD_FAIL:
@@ -76,6 +77,11 @@ const reducer = (state, action) => {
                 isAuthenticated: true,
                 loading: false,
                 user: action.payload
+            }
+        case CLEAR_STATUS:
+            return {
+                ...state,
+                msg: null
             }
         default:
             return state;

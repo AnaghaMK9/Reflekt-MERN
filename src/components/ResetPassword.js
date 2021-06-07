@@ -39,7 +39,7 @@ function ResetPassword(props) {
     const alertContext = useContext(AlertContext);
 
     const { setAlert } = alertContext;
-    const { loading, resetPassword, error, clearErrors, isAuthenticated } = authContext;
+    const { loading, resetPassword, error, clearErrors, isAuthenticated, msg, clearStatus } = authContext;
 
     const [password, setPassword] = useState("");
     const [cpassword, setCpassword] = useState("");
@@ -48,13 +48,17 @@ function ResetPassword(props) {
         if (isAuthenticated) {
             props.history.push('/login');
         }
+        if(msg) {
+            setAlert(msg,'primary');
+            clearStatus();
+        }
         if (error) {
             error.forEach(err => {
                 setAlert(err.msg, 'primary');
             });
             clearErrors();
         }
-    }, [error, clearErrors, setAlert, props.history, isAuthenticated]);
+    }, [error, clearErrors, setAlert, props.history, isAuthenticated, msg, clearStatus]);
 
     const onSubmit = (event) => {
         event.preventDefault();

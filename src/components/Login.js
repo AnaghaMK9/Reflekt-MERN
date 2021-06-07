@@ -84,7 +84,7 @@ function Login(props) {
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
-                                required
+                                // required
                                 fullWidth
                                 id="email"
                                 label="Email Address"
@@ -97,7 +97,7 @@ function Login(props) {
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
-                                required
+                                // required
                                 fullWidth
                                 name="password"
                                 label="Password"
