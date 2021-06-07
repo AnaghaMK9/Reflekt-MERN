@@ -23,6 +23,7 @@ import Instructions from './Instructions.js';
 import SearchResults from 'react-filter-search';
 //context
 import JournalContext from '../../context/dashboard/JournalContext.js';
+import AuthContext from '../../context/auth/AuthContext';
 
 const drawerWidth = 350;
 
@@ -67,7 +68,8 @@ function Sidebar() {
         setActiveJournal,
         addJournal
     } = journalContext;
-
+    const authContext = useContext(AuthContext);
+    const {user} = authContext;
     const [data, setData] = useState({
         title: 'Untitled Journal',
         journalbody: "this is body.."
@@ -121,7 +123,7 @@ function Sidebar() {
             <AppBar justify='space-between' position='fixed' className={classes.appBar}>
                 <Toolbar>
                     <Typography variant='h6' >
-                        Welcome To Dashboard!
+                        Welcome To Dashboard, {user.name}!
                     </Typography>
                     <div className={classes.grow} />
                     <Button onClick={handleClickOpen} color='inherit'>
