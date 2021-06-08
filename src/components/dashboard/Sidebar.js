@@ -165,7 +165,7 @@ function Sidebar() {
                                 journals.map((journal) => (
                                     <ListItem button key={journal._id}
                                         onClick={() => onEditEntry(journal._id)}
-                                        className={journal._id === activeJournal && classes.setActive}>
+                                        className={`${journal._id === activeJournal && classes.setActive}`}>
                                         <ListItemIcon><MenuBook /></ListItemIcon>
                                         <ListItemText
                                             primary={journal.title}

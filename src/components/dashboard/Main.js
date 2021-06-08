@@ -43,7 +43,7 @@ function Main({ activeJournal, data, setData, journal }) {
     }
 
     const autosave = () => {
-        if(timer){
+        if (timer) {
             clearTimeout(timer);
         }
         timer = setTimeout(save, 5000);
@@ -76,45 +76,47 @@ function Main({ activeJournal, data, setData, journal }) {
     return (
         <div>
             <div>
-                <div style={{ marginLeft: '3px' }}>{loading ? 'Saving...' : 'Saved'}</div>
-                <TextField
-                    id='title'
-                    name='title'
-                    label="Title"
-                    fullWidth
-                    margin='normal'
-                    variant='filled'
-                    className={classes.title}
-                    value={current.title}
-                    onChange={(e) => onEdit('title', e.target.value)}
-                    onKeyUp={autosave}
-                />
-                <TextField
-                    id='journalbody'
-                    label="Journal"
-                    name='journalbody'
-                    placeholder="Start writing"
-                    multiline
-                    rows={6}
-                    rowsMax={6}
-                    fullWidth
-                    margin='normal'
-                    variant='filled'
-                    className={classes.title}
-                    value={current.journalbody}
-                    onChange={(e) => onEdit('journalbody', e.target.value)}
-                    onKeyUp={autosave} />
-            </div>
-            {/* <Button onClick={save} backgroundColor='primary'>Save</Button> */}
-            <div>
+                <form>
+                    <div style={{ marginLeft: '3px' }}>{loading ? 'Saving...' : 'Saved'}</div>
+
+                    <TextField
+                        id='title'
+                        name='title'
+                        label="Title"
+                        type='text'
+                        fullWidth
+                        margin='normal'
+                        variant='filled'
+                        className={classes.title}
+                        onChange={(e) => onEdit('title', e.target.value)}
+                        value={current.title}
+                        onKeyUp={autosave}
+                    />
+                    <TextField
+                        id='journalbody'
+                        label="Journal"
+                        name='journalbody'
+                        type='text'
+                        placeholder="Start writing"
+                        multiline
+                        rows={6}
+                        rowsmax={6}
+                        fullWidth
+                        margin='normal'
+                        variant='filled'
+                        className={classes.title}
+                        onChange={(e) => onEdit('journalbody', e.target.value)}
+                        value={current.journalbody}
+                        onKeyUp={autosave} />
+                </form>
                 <Typography variant='h5'>
                     {current.title}
                 </Typography>
                 <Box component='div'
                     display='block'
                     rows={6}
-                    rowsMax={6}
-                    multiline>
+                    rowsmax={6}
+                    multiline='true'>
                     <ReactMarkdown>
                         {current.journalbody}
                     </ReactMarkdown>
